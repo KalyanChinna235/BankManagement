@@ -1,23 +1,14 @@
 package com.bank.mapper;
 
-import com.bank.dto.AccountDto;
+import com.bank.dto.request.AccountRequest;
+import com.bank.dto.response.AccountResponse;
 import com.bank.model.Account;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
 
-@Component
-public class AccountMapper {
+@Mapper(componentModel = "spring")
+public interface AccountMapper {
 
-    public static Account mapTOAccount(AccountDto accountDto) {
+    AccountResponse toResponse(Account account);
 
-        return new Account(accountDto.getId(),
-                accountDto.getAccountHolderName(),
-                accountDto.getAmmount());
-    }
-
-    public static AccountDto mapToAccountDto(Account account) {
-
-        return new AccountDto(account.getId(),
-                account.getAccountHolderName(),
-                account.getAmmount());
-    }
+    Account toEntity(AccountRequest request);
 }
