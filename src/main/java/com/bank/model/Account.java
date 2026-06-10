@@ -1,5 +1,6 @@
 package com.bank.model;
 
+import com.bank.enums.AccountStatus;
 import com.bank.enums.AccountType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -31,9 +32,6 @@ public class Account {
     @Column(unique = true, nullable = false)
     private String accountNumber;
 
-    @Column(nullable = false)
-    private String status;
-
     @NotBlank(message = "Email connot be null or empty")
     @Email(message = "Email should be valid")
     private String email;
@@ -52,6 +50,10 @@ public class Account {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status;
 
     @DecimalMin(value = "1000.0", inclusive = true)
     private double initialDeposit;

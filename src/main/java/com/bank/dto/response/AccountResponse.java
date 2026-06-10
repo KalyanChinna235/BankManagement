@@ -1,5 +1,6 @@
 package com.bank.dto.response;
 
+import com.bank.enums.AccountStatus;
 import com.bank.enums.AccountType;
 import lombok.*;
 
@@ -27,9 +28,9 @@ public class AccountResponse {
 
     private AccountType accountType;
 
-    private Double balance;
+    private AccountStatus status;
 
-    private String status;
+    private Double balance;
 
     private LocalDateTime createdAt;
 }
