@@ -4,6 +4,8 @@ import com.bank.enums.AccountType;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,7 +32,7 @@ public class AccountRequest {
     private AccountType accountType;
 
     @DecimalMin(value = "1000.0", inclusive = true)
-    private double initialDeposit;
+    private BigDecimal balance;
 
     @Pattern(
             regexp = "^[A-Z]{5}[0-9]{4}[A-Z]$",

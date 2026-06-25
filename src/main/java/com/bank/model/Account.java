@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.DecimalMin;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -56,7 +57,7 @@ public class Account {
     private AccountStatus status;
 
     @DecimalMin(value = "1000.0", inclusive = true)
-    private double initialDeposit;
+    private BigDecimal balance;
 
     @NotBlank(message = "PAN number is required")
     @Pattern(

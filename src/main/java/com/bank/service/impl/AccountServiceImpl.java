@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
                 .phoneNumber(request.getPhoneNumber())
                 .address(request.getAddress())
                 .accountType(request.getAccountType())
-                .initialDeposit(request.getInitialDeposit())
+                .balance(request.getBalance())
                 .panNumber(request.getPanNumber())
                 .aadharNumber(request.getAadharNumber())
                 .accountNumber(String.valueOf(generateAccountNumber()))

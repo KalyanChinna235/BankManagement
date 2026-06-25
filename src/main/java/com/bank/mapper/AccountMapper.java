@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AccountMapper {
 
-    @Mapping(source = "initialDeposit", target = "balance")
     AccountResponse toResponse(Account account);
 
     Account toEntity(AccountRequest request);

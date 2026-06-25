@@ -4,6 +4,7 @@ import com.bank.enums.AccountStatus;
 import com.bank.enums.AccountType;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
@@ -30,7 +31,7 @@ public class AccountResponse {
 
     private AccountStatus status;
 
-    private Double balance;
+    private BigDecimal balance;
 
     private LocalDateTime createdAt;
 }
