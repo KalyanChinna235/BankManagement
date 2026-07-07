@@ -21,12 +21,13 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String transactionReference;
+    @Column(nullable = false)
+    private String referenceNumber;
 
     private String accountNumber;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TransactionType transactionType;
 
     private BigDecimal amount;
@@ -38,5 +39,9 @@ public class Transaction {
 
     private String performedBy;
 
+    @Column(nullable = false)
     private LocalDateTime transactionDate;
+
+    @Column(length = 250)
+    private String remarks;
 }

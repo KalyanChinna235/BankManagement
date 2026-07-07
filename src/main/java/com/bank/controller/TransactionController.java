@@ -1,6 +1,8 @@
 package com.bank.controller;
 
 import com.bank.dto.request.DepositRequest;
+import com.bank.dto.request.TransferRequest;
+import com.bank.dto.request.TransferResponse;
 import com.bank.dto.request.WithdrawRequest;
 import com.bank.dto.response.DepositResponse;
 import com.bank.dto.response.WithdrawResponse;
@@ -32,5 +34,11 @@ public class TransactionController {
     public ResponseEntity<WithdrawResponse> withdraw(@Valid @RequestBody WithdrawRequest request) throws InsufficientBalanceException {
 
         return ResponseEntity.ok(transactionService.withdraw(request));
+    }
+
+    @PostMapping("/transfer")
+    public ResponseEntity<TransferResponse> transfer(@Valid @RequestBody TransferRequest request) throws InsufficientBalanceException {
+
+        return ResponseEntity.ok(transactionService.transfer(request));
     }
 }

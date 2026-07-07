@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @Builder
 public class DepositResponse {
 
-    private String transactionReference;
+    private String referenceNumber;
 
     private String accountNumber;
 

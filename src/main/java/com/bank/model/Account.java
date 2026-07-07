@@ -56,7 +56,6 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
 
-    @DecimalMin(value = "1000.0", inclusive = true)
     private BigDecimal balance;
 
     @NotBlank(message = "PAN number is required")
