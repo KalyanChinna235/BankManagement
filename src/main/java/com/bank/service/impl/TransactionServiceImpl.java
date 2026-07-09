@@ -5,11 +5,13 @@ import com.bank.dto.request.TransferRequest;
 import com.bank.dto.request.TransferResponse;
 import com.bank.dto.request.WithdrawRequest;
 import com.bank.dto.response.DepositResponse;
+import com.bank.dto.response.TransactionResponse;
 import com.bank.dto.response.WithdrawResponse;
 import com.bank.enums.TransactionStatus;
 import com.bank.enums.TransactionType;
 import com.bank.exception.AccountNotFoundException;
 import com.bank.exception.InsufficientBalanceException;
+import com.bank.mapper.TransactionMapper;
 import com.bank.model.Account;
 import com.bank.model.Transaction;
 import com.bank.repository.AccountRepository;
@@ -18,10 +20,17 @@ import com.bank.security.jwt.SecurityUtils;
 import com.bank.service.TransactionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,6 +43,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
 
     private final SecurityUtils securityUtils;
+
+    private final TransactionMapper transactionMapper;
 
     @Transactional
     @Override
@@ -172,6 +183,50 @@ public class TransactionServiceImpl implements TransactionService {
                 .receiverBalance(receiverNewBalance)
                 .status("SUCCESS")
                 .build();
+    }
+
+    @Override
+    public List<TransactionResponse> getTransactions(String accountNumber) {
+
+
+        return transactionRepository
+                .findTop10ByAccountNumberOrderByTransactionDateDesc(accountNumber)
+                .stream()
+                .map(transactionMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TransactionResponse> getMiniStatement(String accountNumber) {
+
+
+        return transactionRepository
+                .findTop10ByAccountNumberOrderByTransactionDateDesc(accountNumber)
+                .stream()
+                .map(transactionMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public List<TransactionResponse> getTransactionsByDate(String accountNumber, LocalDate start, LocalDate end) {
+
+        return transactionRepository.findByAccountNumberAndTransactionDateBetweenOrderByTransactionDateDesc(
+                        accountNumber, start.atStartOfDay(), end.atTime(LocalTime.MAX))
+                .stream()
+                .map(transactionMapper::toResponse)
+                .toList();
+    }
+
+    @Override
+    public Page<TransactionResponse> getTransactions(String accountNumber, int page, int size, String sortBy, String direction) {
+
+        Sort sort = direction.equalsIgnoreCase("des")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return transactionRepository.findByAccountNumber(accountNumber, pageable)
+                .map(transactionMapper::toResponse);
     }
 
 
