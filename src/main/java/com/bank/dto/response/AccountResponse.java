@@ -34,4 +34,8 @@ public class AccountResponse {
     private BigDecimal balance;
 
     private LocalDateTime createdAt;
+
+    private String freezeReason;
+
+    private LocalDateTime frozenAt;
 }
