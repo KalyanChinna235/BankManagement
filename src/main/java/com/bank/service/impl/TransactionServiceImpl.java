@@ -7,8 +7,10 @@ import com.bank.dto.request.WithdrawRequest;
 import com.bank.dto.response.DepositResponse;
 import com.bank.dto.response.TransactionResponse;
 import com.bank.dto.response.WithdrawResponse;
+import com.bank.enums.AccountStatus;
 import com.bank.enums.TransactionStatus;
 import com.bank.enums.TransactionType;
+import com.bank.exception.AccountFrozenException;
 import com.bank.exception.AccountNotFoundException;
 import com.bank.exception.InsufficientBalanceException;
 import com.bank.mapper.TransactionMapper;
@@ -45,6 +47,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final SecurityUtils securityUtils;
 
     private final TransactionMapper transactionMapper;
+
+    private final AccountValidator accountValidator;
 
     @Transactional
     @Override
@@ -87,6 +91,11 @@ public class TransactionServiceImpl implements TransactionService {
         Account account = accountRepository.findByAccountNumber(request.getAccountNumber())
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
 
+        accountValidator.validateActive(account);
+//        if (account.getStatus() == AccountStatus.FROZEN) {
+//            throw new AccountFrozenException("Account is Frozen");
+//        }
+
         if (account.getBalance().compareTo(request.getAmount()) < 0) {
 
             throw new InsufficientBalanceException("Insufficient balance");
@@ -127,6 +136,12 @@ public class TransactionServiceImpl implements TransactionService {
 
         Account sender = accountRepository.findByAccountNumber(request.getFromAccount())
                 .orElseThrow(() -> new AccountNotFoundException("Account not found"));
+
+        accountValidator.validateActive(sender);
+//        if (sender.getStatus() == AccountStatus.FROZEN) {
+//
+//            throw new AccountFrozenException("Sender account is frozen");
+//        }
 
         Account receiver = accountRepository.findByAccountNumber(request.getToAccount())
                 .orElseThrow(() -> new AccountNotFoundException("Receiver account not found"));

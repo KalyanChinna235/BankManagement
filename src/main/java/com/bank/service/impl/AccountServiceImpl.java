@@ -1,9 +1,12 @@
 package com.bank.service.impl;
 
 import com.bank.dto.request.AccountRequest;
+import com.bank.dto.request.FreezeAccountRequest;
+import com.bank.dto.request.UnfreezeAccountRequest;
 import com.bank.dto.request.UpdateDetailsRequest;
 import com.bank.dto.response.AccountResponse;
 import com.bank.enums.AccountStatus;
+import com.bank.exception.AccountNotFoundException;
 import com.bank.exception.ResourceNotFoundException;
 import com.bank.mapper.AccountMapper;
 import com.bank.model.Account;
@@ -103,6 +106,49 @@ public class AccountServiceImpl implements AccountService {
         }
 
 
+    }
+
+    @Override
+    public AccountResponse freezeAccount(FreezeAccountRequest request) {
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber())
+                .orElseThrow(() -> new AccountNotFoundException("Account not found"));
+
+        if (account.getStatus() == AccountStatus.FROZEN) {
+
+            throw new IllegalStateException("Account already frozen");
+        }
+
+        account.setStatus(AccountStatus.FROZEN);
+
+        account.setFreezeReason(request.getReason());
+
+        account.setFrozenAt(LocalDateTime.now());
+
+        Account saved = accountRepository.save(account);
+
+        return accountMapper.toResponse(saved);
+    }
+
+    @Override
+    public AccountResponse unfreezeAccount(UnfreezeAccountRequest request) {
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber())
+                .orElseThrow(() ->
+                        new AccountNotFoundException("Account not found"));
+
+        if (account.getStatus() == AccountStatus.ACTIVE) {
+
+            throw new IllegalStateException("Account is already active");
+        }
+
+        account.setStatus(AccountStatus.ACTIVE);
+
+        account.setFreezeReason(null);
+
+        account.setUnfrozenAt(LocalDateTime.now());
+
+        Account saved = accountRepository.save(account);
+
+        return accountMapper.toResponse(saved);
     }
 
     private Long generateAccountNumber() {

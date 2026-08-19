@@ -2,6 +2,8 @@ package com.bank.controller;
 
 import com.bank.dto.request.AccountRequest;
 
+import com.bank.dto.request.FreezeAccountRequest;
+import com.bank.dto.request.UnfreezeAccountRequest;
 import com.bank.dto.request.UpdateDetailsRequest;
 import com.bank.dto.response.AccountResponse;
 import com.bank.exception.ResourceNotFoundException;
@@ -49,5 +51,17 @@ public class AccountController {
     public ResponseEntity<String> deleteAccount(@PathVariable String accountNumber) throws ResourceNotFoundException {
         accountService.deleteAccount(accountNumber);
         return new ResponseEntity<>("Account with account number " + accountNumber + " has been deleted successfully.", HttpStatus.OK);
+    }
+
+    @PatchMapping("/freeze")
+    public ResponseEntity<AccountResponse> freezeAccount(@Valid @RequestBody FreezeAccountRequest request) {
+
+        return ResponseEntity.ok(accountService.freezeAccount(request));
+    }
+
+    @PatchMapping("/unfreeze")
+    public ResponseEntity<AccountResponse> unfreezeAccount(@Valid @RequestBody UnfreezeAccountRequest request) {
+
+        return ResponseEntity.ok(accountService.unfreezeAccount(request));
     }
 }

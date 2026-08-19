@@ -48,6 +48,58 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                         )
                 );
     }
+
+    @ExceptionHandler(BeneficiaryAlreadyExistsException.class)
+    public ResponseEntity<Map<String, Object>> handleBeneficiaryAlreadyExists(BeneficiaryAlreadyExistsException ex) {
+
+        return ResponseEntity.badRequest().body(
+                Map.of(
+                        "timestamp", LocalDateTime.now(),
+                        "message", ex.getMessage(),
+                        "status", HttpStatus.BAD_REQUEST.value()
+                )
+        );
+    }
+
+    @ExceptionHandler(BeneficiaryNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleBeneficiaryNotFound(BeneficiaryNotFoundException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                Map.of(
+                        "timestamp", LocalDateTime.now(),
+                        "message", ex.getMessage(),
+                        "status", HttpStatus.NOT_FOUND.value()
+                )
+        );
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException ex) {
+
+        return ResponseEntity.badRequest().body(
+                Map.of(
+                        "timestamp", LocalDateTime.now(),
+                        "message", ex.getMessage(),
+                        "status", HttpStatus.BAD_REQUEST.value()
+                )
+        );
+    }
+
+    @ExceptionHandler(AccountFrozenException.class)
+    public ResponseEntity<Map<String, Object>> handleFrozen(AccountFrozenException ex) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        Map.of(
+                                "timestamp",
+                                LocalDateTime.now(),
+                                "message",
+                                ex.getMessage(),
+                                "status",
+                                HttpStatus.BAD_REQUEST.value()
+                        ));
+    }
+
 //    @ExceptionHandler(UsernameNotFoundException.class)
 //    public ResponseEntity<Object> handleOrderNotFoundException(
 //            UsernameNotFoundException ex, WebRequest request) {
