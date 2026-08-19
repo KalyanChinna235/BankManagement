@@ -73,11 +73,7 @@ public class Account {
     private String aadharNumber;
 
     private LocalDateTime createdAt;
-
-<<<<<<< HEAD
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", nullable = false)
-=======
+    
     private String freezeReason;
 
     private LocalDateTime frozenAt;
@@ -86,7 +82,6 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
     private User user;
 
 }

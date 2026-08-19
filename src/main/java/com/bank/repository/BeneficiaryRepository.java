@@ -10,14 +10,7 @@ public interface BeneficiaryRepository extends JpaRepository<Beneficiary, Long> 
 
     List<Beneficiary> findByOwnerAccountNumber(String ownerAccountNumber);
 
-<<<<<<< HEAD
     boolean existsByOwnerAccountNumberAndBeneficiaryAccountNumber(String OwnerAccountNumber, String beneficiaryAccountNumber);
 
     Optional<Beneficiary> findByIdAndOwnerAccountNumber(Long id, String ownerAccountNumber);
 }
-=======
-    boolean existsByOwnerAccountNumberAndBeneficiaryAccountNumber(String ownerAccountNumber, String beneficiaryAccountNumber);
-
-    Optional<Beneficiary> findByIdAndOwnerAccountNumber(Long id, String ownerAccountNumber);
-}
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98

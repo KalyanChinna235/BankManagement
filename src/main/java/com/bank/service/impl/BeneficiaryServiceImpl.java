@@ -2,23 +2,6 @@ package com.bank.service.impl;
 
 import com.bank.dto.request.AddBeneficiaryRequest;
 import com.bank.dto.response.BeneficiaryResponse;
-<<<<<<< HEAD
-import com.bank.service.BeneficiaryService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service
-@RequiredArgsConstructor
-public class BeneficiaryServiceImpl implements BeneficiaryService {
-    @Override
-    public BeneficiaryResponse addBeneficiary(AddBeneficiaryRequest request) {
-        
-        return null;
-=======
-import com.bank.enums.AccountStatus;
-import com.bank.exception.AccountFrozenException;
 import com.bank.exception.AccountNotFoundException;
 import com.bank.exception.BeneficiaryAlreadyExistsException;
 import com.bank.exception.BeneficiaryNotFoundException;
@@ -28,11 +11,11 @@ import com.bank.repository.AccountRepository;
 import com.bank.repository.BeneficiaryRepository;
 import com.bank.service.BeneficiaryService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class BeneficiaryServiceImpl implements BeneficiaryService {
@@ -88,14 +71,10 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
                 .nickname(saved.getNickname())
                 .createdAt(saved.getCreatedAt())
                 .build();
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
     }
 
     @Override
     public List<BeneficiaryResponse> getBeneficiaries(String ownerAccountNumber) {
-<<<<<<< HEAD
-        return null;
-=======
         return beneficiaryRepository.findByOwnerAccountNumber(ownerAccountNumber)
                 .stream()
                 .map(b -> BeneficiaryResponse.builder()
@@ -107,19 +86,16 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
                         .createdAt(b.getCreatedAt())
                         .build())
                 .toList();
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
     }
 
     @Override
     public void deleteBeneficiary(Long beneficiaryId, String ownerAccountNumber) {
-<<<<<<< HEAD
 
-=======
         Beneficiary beneficiary = beneficiaryRepository
                 .findByIdAndOwnerAccountNumber(beneficiaryId, ownerAccountNumber)
                 .orElseThrow(() -> new BeneficiaryNotFoundException("Beneficiary not found"));
 
         beneficiaryRepository.delete(beneficiary);
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
+
     }
 }

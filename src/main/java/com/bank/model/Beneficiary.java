@@ -1,9 +1,5 @@
 package com.bank.model;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,10 +29,6 @@ public class Beneficiary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
     @Column(name = "owner_account_number", nullable = false)
     private String ownerAccountNumber;
 
@@ -49,8 +41,5 @@ public class Beneficiary {
     private String nickname;
 
     private LocalDateTime createdAt;
-<<<<<<< HEAD
-    
-=======
->>>>>>> cb7fff5fc388750e62434d114bf2d6713a5aac98
+
 }
